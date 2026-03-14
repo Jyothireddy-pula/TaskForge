@@ -42,7 +42,7 @@ function TaskCard({ task, onDelete, onToggle, onUpdate, onUpload }) {
       ) : (
         <>
           <h3 className={task.completed ? "completed" : ""}>{task.title}</h3>
-          <div style={{ marginBottom: 8, display: "flex", gap: 8, alignItems: "center" }}>
+          <div style={{ marginBottom: 8, display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
             <span style={{ fontSize: 12, opacity: 0.8 }}>Status:</span>
             <select
               value={task.status || "todo"}
@@ -60,6 +60,21 @@ function TaskCard({ task, onDelete, onToggle, onUpdate, onUpload }) {
               <option value="in-progress">In progress</option>
               <option value="done">Done</option>
             </select>
+            <span style={{ fontSize: 12, opacity: 0.8 }}>Due:</span>
+            <input
+              type="date"
+              value={task.dueDate ? new Date(task.dueDate).toISOString().slice(0, 10) : ""}
+              onChange={(e) => {
+                const val = e.target.value
+                onUpdate(task._id, { dueDate: val ? new Date(val).toISOString() : null })
+              }}
+              style={{
+                fontSize: 12,
+                padding: "4px 8px",
+                borderRadius: 6,
+                border: "1px solid #e5e7eb"
+              }}
+            />
           </div>
           <div className="task-actions">
             <button className="btn-toggle" onClick={() => onToggle(task)}>

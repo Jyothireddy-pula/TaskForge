@@ -19,6 +19,7 @@ const socket = io(API_BASE_URL)
 function Dashboard() {
   const [tasks, setTasks] = useState([])
   const [title, setTitle] = useState("")
+  const [dueDate, setDueDate] = useState("")
   const [search, setSearch] = useState("")
   const [filter, setFilter] = useState("all")
   const [view, setView] = useState("board")
@@ -67,8 +68,11 @@ function Dashboard() {
   const addTask = async () => {
     if (!title) return
 
-    await createTask({ title })
+    const payload = { title }
+    if (dueDate) payload.dueDate = new Date(dueDate).toISOString()
+    await createTask(payload)
     setTitle("")
+    setDueDate("")
     loadTasks()
   }
 
@@ -204,6 +208,16 @@ function Dashboard() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Add a task..."
+        />
+        <input
+          type="date"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+          style={{
+            padding: "8px 12px",
+            borderRadius: 8,
+            border: "1px solid var(--border, #e5e7eb)"
+          }}
         />
 
         <button onClick={addTask}>Add</button>
