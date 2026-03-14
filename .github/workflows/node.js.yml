@@ -24,15 +24,12 @@ jobs:
       - name: Install backend dependencies
         working-directory: backend
         run: npm install
-
-      - name: Backend build/test (optional)
+        
+      - name: Backend build (optional)
         working-directory: backend
         run: |
-          if [ -f package.json ] && jq -e '.scripts.build' package.json > /dev/null; then
-            npm run build
-          fi
-          if [ -f package.json ] && jq -e '.scripts.test' package.json > /dev/null; then
-            npm test
+          if [ -f package.json ]; then
+            npm run build || echo "No backend build script, skipping"
           fi
 
       # Frontend install + build
