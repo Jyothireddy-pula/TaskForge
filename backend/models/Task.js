@@ -26,6 +26,10 @@ const TaskSchema = new mongoose.Schema({
     enum: ["todo", "in-progress", "done"],
     default: "todo"
   },
+  workspace: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Workspace"
+  },
   // Link each task to a user
   user: {
     type: mongoose.Schema.Types.ObjectId,

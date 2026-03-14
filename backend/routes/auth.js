@@ -1,18 +1,31 @@
 const express = require("express")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const Joi = require("joi")
 const User = require("../models/User")
 
 const router = express.Router()
 
+const signupSchema = Joi.object({
+  name: Joi.string().min(2).max(100).required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().min(8).max(100).required()
+})
+
+const loginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(8).max(100).required()
+})
+
 // POST /api/auth/signup
 router.post("/signup", async (req, res) => {
   try {
-    const { name, email, password } = req.body
-
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: "All fields are required" })
+    const { error } = signupSchema.validate(req.body)
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message })
     }
+
+    const { name, email, password } = req.body
 
     const existing = await User.findOne({ email })
     if (existing) {
@@ -49,6 +62,11 @@ router.post("/signup", async (req, res) => {
 // POST /api/auth/login
 router.post("/login", async (req, res) => {
   try {
+    const { error } = loginSchema.validate(req.body)
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message })
+    }
+
     const { email, password } = req.body
 
     const user = await User.findOne({ email })
