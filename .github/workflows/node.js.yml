@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # Backend install + basic check
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm install
+
+      - name: Backend build/test (optional)
+        working-directory: backend
+        run: |
+          if [ -f package.json ] && jq -e '.scripts.build' package.json > /dev/null; then
+            npm run build
+          fi
+          if [ -f package.json ] && jq -e '.scripts.test' package.json > /dev/null; then
+            npm test
+          fi
+
+      # Frontend install + build
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
