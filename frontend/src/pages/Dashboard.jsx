@@ -12,7 +12,7 @@ import StatsChart from "../components/StatsChart"
 import CalendarView from "../components/CalendarView"
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000"
+  import.meta.env.VITE_API_BASE_URL || "https://todolist-wkrf.onrender.com"
 
 const socket = io(API_BASE_URL)
 

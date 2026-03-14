@@ -42,6 +42,12 @@ function App() {
     setDarkMode((prev) => !prev)
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem("authToken")
+    localStorage.removeItem("authUser")
+    setUser(null)
+  }
+
   return (
     <div
       style={{
@@ -68,9 +74,24 @@ function App() {
 
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
           {user && (
-            <span style={{ fontSize: 14, opacity: 0.8 }}>
-              Hi, {user.name || user.email}
-            </span>
+            <>
+              <span style={{ fontSize: 14, opacity: 0.8 }}>
+                Hi, {user.name || user.email}
+              </span>
+              <button
+                onClick={handleLogout}
+                style={{
+                  padding: "8px 16px",
+                  borderRadius: "8px",
+                  border: "none",
+                  cursor: "pointer",
+                  background: "var(--border)",
+                  color: "var(--text)"
+                }}
+              >
+                Logout
+              </button>
+            </>
           )}
           <button
             onClick={toggleTheme}
