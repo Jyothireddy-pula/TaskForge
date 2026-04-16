@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const Joi = require("joi")
 const User = require("../models/User")
+const passport = require("../config/passport")
 
 const router = express.Router()
 
@@ -95,6 +96,61 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: error.message })
   }
 })
+
+// GET /api/auth/google
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+
+// GET /api/auth/google/callback
+router.get("/google/callback", 
+  passport.authenticate("google", { failureRedirect: `${process.env.CLIENT_ORIGIN}/login?error=oauth_failed` }),
+  async (req, res) => {
+    try {
+      const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, {
+        expiresIn: "1h"
+      });
+
+      res.redirect(`${process.env.CLIENT_ORIGIN}/auth/callback?token=${token}`);
+    } catch (error) {
+      res.redirect(`${process.env.CLIENT_ORIGIN}/login?error=token_generation_failed`);
+    }
+  }
+);
+
+// GET /api/auth/me
+router.get("/me", async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    
+    if (!token) {
+      return res.status(401).json({ message: "No token provided" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id).select("-password");
+    
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar,
+        provider: user.provider
+      }
+    });
+  } catch (error) {
+    if (error.name === "JsonWebTokenError") {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json({ message: "Token expired" });
+    }
+    res.status(500).json({ message: error.message });
+  }
+});
 
 module.exports = router
 

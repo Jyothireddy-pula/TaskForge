@@ -7,6 +7,8 @@ const http = require("http")
 const { Server } = require("socket.io")
 const helmet = require("helmet")
 const rateLimit = require("express-rate-limit")
+const session = require("express-session")
+const passport = require("./config/passport")
 
 const taskRoutes = require("./routes/tasks")
 const authRoutes = require("./routes/auth")
@@ -29,6 +31,18 @@ app.set("io", io)
 io.on("connection", () => {
   // Socket connected
 })
+
+// Session configuration
+app.use(session({
+  secret: process.env.JWT_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } // Set to true in production with HTTPS
+}));
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Security & core middleware
 app.use(helmet())
@@ -53,7 +67,7 @@ app.use("/api/tasks", taskRoutes)
 app.use("/api/workspaces", workspaceRoutes)
 
 app.get("/", (req, res) => {
-  res.send("TaskForge API running")
+  res.send("NexusFlow API running")
 })
 
 // Database connection

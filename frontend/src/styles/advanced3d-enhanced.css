@@ -1,0 +1,211 @@
+/* Enhanced CSS Classes for Perfect UI */
+
+/* Enhanced Input Styles */
+.input-group-3d {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.input-group-3d:hover .input-3d {
+  border-color: rgba(139, 92, 246, 0.4) !important;
+  box-shadow: 0 0 25px rgba(139, 92, 246, 0.2) !important;
+}
+
+.input-group-3d:hover .input-icon-3d {
+  color: #8b5cf6 !important;
+  transform: translateY(-50%) scale(1.1) !important;
+}
+
+/* Enhanced Button Styles */
+.submit-btn-3d {
+  width: 100%;
+  padding: 15px 30px;
+  background: linear-gradient(45deg, #8b5cf6, #3b82f6, #ec4899);
+  border: none;
+  border-radius: 15px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 15px 30px rgba(139, 92, 246, 0.4), 0 5px 15px rgba(236, 72, 153, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn-3d:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 25px 50px rgba(139, 92, 246, 0.5), 0 10px 20px rgba(236, 72, 153, 0.5) !important;
+}
+
+.submit-btn-3d::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.submit-btn-3d:hover::before {
+  left: 100%;
+}
+
+/* Password Toggle Button */
+.password-toggle-3d {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.password-toggle-3d:hover {
+  background: rgba(139, 92, 246, 0.2) !important;
+  transform: translateY(-50%) scale(1.1) !important;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.2) !important;
+}
+
+/* Enhanced Auth Form Card */
+.auth-form-3d:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 30px 60px rgba(139, 92, 246, 0.4) !important;
+}
+
+/* Mode Switcher */
+.mode-switcher-3d {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.mode-switcher-3d button {
+  flex: 1;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mode-switcher-3d button:hover {
+  background: rgba(139, 92, 246, 0.1) !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+  transform: scale(1.02) !important;
+}
+
+.mode-switcher-3d button.active {
+  background: linear-gradient(45deg, #8b5cf6, #3b82f6) !important;
+  border-color: rgba(139, 92, 246, 0.5) !important;
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4) !important;
+}
+
+/* Google OAuth Button */
+.google-btn-3d {
+  width: 100%;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.google-btn-3d:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Error Message with Glow */
+.error-message-3d {
+  animation: errorShake 0.5s ease-in-out, glowPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(239, 68, 68, 0.6);
+  }
+}
+
+/* Loading Animation */
+.loading-spinner-3d {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.loading-dot {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  animation: bounce 0.6s ease-in-out infinite;
+}
+
+.loading-dot:nth-child(1) { animation-delay: 0s; }
+.loading-dot:nth-child(2) { animation-delay: 0.1s; }
+.loading-dot:nth-child(3) { animation-delay: 0.2s; }
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Enhanced Glass Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 25px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .auth-form-3d {
+    max-width: 95% !important;
+    padding: 30px 20px !important;
+  }
+  
+  .auth-header h1 {
+    font-size: 2rem !important;
+  }
+  
+  .logo-3d svg {
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
+
+/* Floating Animation for Form */
+@keyframes formFloat {
+  0%, 100% {
+    transform: translateY(0) rotateX(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotateX(2deg);
+  }
+}
